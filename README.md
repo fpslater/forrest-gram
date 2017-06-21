@@ -1,5 +1,5 @@
 # ForrestGram
-Mimics Forrest Slater's github (maximum 20 tiles)
+Mimics Forrest Slater's Instagram profile (maximum 20 tiles)
 
 - Node must be installed
 
