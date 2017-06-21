@@ -89,7 +89,7 @@ class TileLayout extends Component {
         <div className='tiles'>
           {tiles}
         </div>
-        {(!this.state.clicked && this.state.tiles.length) &&
+        {(!this.state.clicked && this.state.tiles.length > 0) &&
           <button className='load-more-button' onClick={this.handleClick}>Load more</button>
         }
       </div>
