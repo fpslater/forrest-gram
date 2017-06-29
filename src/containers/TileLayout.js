@@ -72,7 +72,6 @@ class TileLayout extends Component {
     const _this = this;
 
     function creatTile(obj, i) {
-      console.log(obj)
       return <Tile 
               key={i}
               href={obj.link}
@@ -89,7 +88,7 @@ class TileLayout extends Component {
         <div className='tiles'>
           {tiles}
         </div>
-        {(!this.state.clicked && this.state.tiles.length > 0) &&
+        {(!this.state.clicked && tiles.length > 0) &&
           <button className='load-more-button' onClick={this.handleClick}>Load more</button>
         }
       </div>
