@@ -2,23 +2,116 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.logo-icon {
+  width: 122px;
+  margin-left: 16px;
+  position: absolute;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+.logo-title {
+  position: absolute;
+  left: 0;
+  margin: 18px 50px;
+  font-size: 25px;
+  text-shadow: 1px 1px 1px;
+  letter-spacing: 1px;
+}
+
+.logo-description {
+  text-align: center;
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  line-height: 135px;
+}
+
+.main-content {
+  margin: 50px;
+  overflow: auto;
+}
+
+.tiles {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+}
+
+.tile {
+  display: flex;
+  flex: 0 0 33.33%;
+  box-sizing: border-box;
+  border: 10px solid white;
+  position: relative;
+  margin: 0px;
+}
+
+.tile a {
+  cursor: pointer;
+}
+
+.tile a:hover .tile-img {
+  opacity: 0.3;
+}
+
+.tile a:hover .tile-caption {
+  visibility: visible;
+}
+
+.tile:before {
+  content: '';
+  display: table;
+  padding-top: 100%;
+}
+
+.tile-img {
+  flex-grow: 1;
   color: white;
+
+  display: flex;
+  overflow: hidden;
 }
 
-.App-intro {
-  font-size: large;
+.tile-img img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.tile-caption {
+  position: absolute;
+  top: 50%;
+  margin-top: -60px;
+  font-size: 40px;
+  height: 120px;
+  width: 100%;
+  text-align: center;
+  visibility: hidden;
+}
+
+.tile-caption > div {
+  line-height: 60px;
+}
+
+.load-more-button {
+  margin: 30px auto;
+  position: relative;
+  display: block;
+}
+
+@media screen and (max-width: 920px) {
+  .tile {
+    border: 1px solid white;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tiles {
+    display: block;
+  }
+  .logo-description {
+    text-align: right;
+  }
 }
