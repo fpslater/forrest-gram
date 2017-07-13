@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import $ from "jquery";
 import Tile from './../components/Tile';
 
-const accessToken = '1122988832.6b529d8.642d84539271425eb7108e56227f260e',
-      baseUrl = 'https://api.instagram.com/v1/users/self/media/recent/',
-      tileBatchSize = 12;
+const accessToken = '1122988832.6b529d8.642d84539271425eb7108e56227f260e';
+const baseUrl = 'https://api.instagram.com/v1/users/self/media/recent/';
+const tileBatchSize = 12;
 
 class TileLayout extends Component {
 
@@ -22,7 +22,7 @@ class TileLayout extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    this.generateTiles()
+    this.generateTiles();
   }
   
   componentWillUnmount() {
@@ -30,15 +30,16 @@ class TileLayout extends Component {
   }
 
   handleScroll() {
-    if (!this.setState.clicked) {
+    if (!this.state.clicked) {
       return;
     }
 
-    const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight,
-          body = document.body,
-          html = document.documentElement,
-          docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight),
-          windowBottom = windowHeight + window.pageYOffset;
+    const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
+    const windowBottom = windowHeight + window.pageYOffset;
+
     if (windowBottom >= docHeight && this.state.tiles.length < 20) {
       this.setState({ index: this.state.index + 1 })
       this.generateTiles();
@@ -51,37 +52,37 @@ class TileLayout extends Component {
   }
 
   generateTiles() {
-    const _this = this,
-          url = baseUrl+'?access_token='+accessToken+'&count='+tileBatchSize+'&max_id='+_this.state.maxId;
-
-    $.ajax({
+    const url = baseUrl+'?access_token='+accessToken+'&count='+tileBatchSize+'&max_id='+this.state.maxId;
+    const params = {
       url: url,
       dataType: 'jsonp',
       type: 'GET',
-      success: function(response){
-         _this.setState({tiles: _this.state.tiles.concat(response.data)})
-         _this.setState({maxId: response.pagination.next_max_id})
+      success: (response) => {
+         this.setState({tiles: this.state.tiles.concat(response.data)})
+         this.setState({maxId: response.pagination.next_max_id})
       },
-      error: function(error){
+      error: (error) => {
         alert('API BROKEN', error);
       }
-    });
+    }
+    $.ajax(params);
   }
 
   render() {
-    const _this = this;
 
-    function creatTile(obj, i) {
-      return <Tile 
-              key={i}
-              href={obj.link}
-              src={obj.images.standard_resolution.url}
-              commentsCount={obj.comments.count}
-              likesCount={obj.likes.count}
-            />
+    const creatTile = (obj, i) => {
+      return (
+        <Tile 
+          key={i}
+          href={obj.link}
+          src={obj.images.standard_resolution.url}
+          commentsCount={obj.comments.count}
+          likesCount={obj.likes.count}
+        />
+      );
     }
 
-    let tiles = this.state.tiles.map(creatTile.bind(_this));
+    const tiles = this.state.tiles.map(creatTile);
 
     return (
       <div>
@@ -89,7 +90,11 @@ class TileLayout extends Component {
           {tiles}
         </div>
         {(!this.state.clicked && tiles.length > 0) &&
-          <button className='load-more-button' onClick={this.handleClick}>Load more</button>
+          <button
+            className='load-more-button'
+            onClick={this.handleClick}>
+            Load more
+          </button>
         }
       </div>
     );
